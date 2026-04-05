@@ -4,7 +4,11 @@
     {
       "name": "aws-summit-form",
       "runtimeExecutable": "npm",
+<<<<<<< HEAD
       "runtimeArgs": ["run", "dev", "--prefix", "/Users/bunyamin/aws-summit-form"],
+=======
+      "runtimeArgs": ["run", "dev"],
+>>>>>>> 5db40b810f2170d6b04d61a0d98246a070f9f1d5
       "port": 3000
     }
   ]
