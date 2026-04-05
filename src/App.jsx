@@ -183,7 +183,7 @@ export default function App() {
               <span>📍</span> Osman Hamdi Bey Conference Hall
             </span>
             <span className="event-chip">
-              <span>📅</span> 21 April 2026
+              <span>📅</span> 21 April
             </span>
             <span className="event-chip">
               <span>🕐</span> 10:00 AM — 4:30 PM
