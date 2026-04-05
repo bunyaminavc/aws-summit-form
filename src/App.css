@@ -227,32 +227,116 @@ body {
   color: rgba(255, 255, 255, 0.65);
 }
 
-.header-divider {
-  width: 48px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.7), transparent);
-}
-
-.university-info {
+/* ---------- Event Name ---------- */
+.event-name {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-}
-
-.university-name {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.88);
+  gap: 2px;
   animation: fadeSlideUp 0.7s 0.2s ease both;
 }
 
-.event-label {
+.event-name-line {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.event-name-accent {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #818cf8 70%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: fadeSlideUp 0.7s 0.25s ease both, gradientShift 6s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ---------- Event Chips ---------- */
+.event-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  animation: fadeSlideUp 0.7s 0.4s ease both;
+}
+
+.event-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
   font-size: 12px;
-  letter-spacing: 0.18em;
-  color: var(--accent-light);
-  animation: fadeSlideUp 0.7s 0.35s ease both;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(124, 58, 237, 0.12);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  border-radius: 50px;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition);
+}
+
+.event-chip:hover {
+  background: rgba(124, 58, 237, 0.22);
+  border-color: rgba(124, 58, 237, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ---------- Side Vertical Text ---------- */
+.side-text {
+  position: fixed;
+  top: 22%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.side-text--left {
+  left: 24px;
+}
+
+.side-text--right {
+  right: 24px;
+}
+
+.side-text-content {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 40%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.12;
+  user-select: none;
+}
+
+/* ---------- Grid Pattern ---------- */
+.grid-pattern {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%);
 }
 
 @keyframes fadeSlideUp {
@@ -277,6 +361,31 @@ body {
 @keyframes cardFadeIn {
   from { opacity: 0; transform: translateY(30px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-xl);
+  padding: 1.5px;
+  background: conic-gradient(from var(--card-angle, 0deg), transparent 40%, rgba(124, 58, 237, 0.6) 50%, rgba(37, 99, 235, 0.5) 55%, transparent 65%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: cardBorderSpin 4s linear infinite;
+  pointer-events: none;
+}
+
+@property --card-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes cardBorderSpin {
+  to { --card-angle: 360deg; }
 }
 
 .card-glow {
@@ -412,20 +521,7 @@ body {
 
 /* Input highlight line on focus */
 .input-highlight {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 80%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  border-radius: 2px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-.field-input:focus ~ .input-highlight {
-  transform: translateX(-50%) scaleX(1);
+  display: none;
 }
 
 /* ---------- Valid state ---------- */
@@ -552,7 +648,10 @@ body {
 }
 
 .radio-icon {
-  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
   color: var(--accent-light);
   line-height: 1;
   transition: color var(--transition);
@@ -910,6 +1009,20 @@ body {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 600px) {
+  .side-text,
+  .grid-pattern {
+    display: none;
+  }
+
+  .event-name-accent {
+    font-size: 22px;
+  }
+
+  .event-chips {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .page-wrapper {
     padding: 24px 12px 48px;
   }

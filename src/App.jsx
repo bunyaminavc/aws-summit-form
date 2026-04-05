@@ -31,9 +31,6 @@ const initialFormData = {
 const initialErrors = {
   adSoyad: '',
   eposta: '',
-  universite: '',
-  bolum: '',
-  sinif: '',
   awsDeneyim: '',
 }
 
@@ -54,21 +51,6 @@ function validate(formData) {
     valid = false
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.eposta)) {
     errors.eposta = 'Geçerli bir e-posta adresi giriniz.'
-    valid = false
-  }
-
-  if (!formData.universite.trim()) {
-    errors.universite = 'Üniversite alanı zorunludur.'
-    valid = false
-  }
-
-  if (!formData.bolum.trim()) {
-    errors.bolum = 'Bölüm alanı zorunludur.'
-    valid = false
-  }
-
-  if (!formData.sinif) {
-    errors.sinif = 'Lütfen sınıfınızı seçiniz.'
     valid = false
   }
 
@@ -170,6 +152,17 @@ export default function App() {
         ))}
       </div>
 
+      {/* Vertical ZİRVE 2026 text */}
+      <div className="side-text side-text--left">
+        <span className="side-text-content">ZİRVE 2026</span>
+      </div>
+      <div className="side-text side-text--right">
+        <span className="side-text-content">CLOUD & OKAN</span>
+      </div>
+
+      {/* Grid pattern overlay */}
+      <div className="grid-pattern" aria-hidden="true" />
+
       <main className="main-container">
         {/* Logo / Header */}
         <header className="header">
@@ -180,10 +173,21 @@ export default function App() {
               <span className="logo-cloud-clubs">Cloud Clubs</span>
             </div>
           </div>
-          <div className="header-divider" />
-          <div className="university-info">
-            <span className="university-name">Istanbul Okan University</span>
-            <span className="event-label">✦ Summit 2026 ✦</span>
+
+          <h2 className="event-name">
+            <span className="event-name-line event-name-accent">Cloud & Okan Dev Event</span>
+          </h2>
+
+          <div className="event-chips">
+            <span className="event-chip">
+              <span>📍</span> Osman Hamdi Bey Conference Hall
+            </span>
+            <span className="event-chip">
+              <span>📅</span> 21 April 2026
+            </span>
+            <span className="event-chip">
+              <span>🕐</span> 10:00 AM — 4:30 PM
+            </span>
           </div>
         </header>
 
@@ -194,9 +198,9 @@ export default function App() {
           {!isSuccess ? (
             <>
               <div className="card-header">
-                <h1 className="form-title">Summit Kayıt Formu</h1>
+                <h1 className="form-title">Kayıt Formu</h1>
                 <p className="form-subtitle">
-                  AWS Cloud Clubs etkinliğine katılmak için aşağıdaki formu doldurunuz.
+                  Cloud & Okan Dev Event etkinliğine katılmak için aşağıdaki formu doldurunuz.
                 </p>
               </div>
 
@@ -277,11 +281,11 @@ export default function App() {
                 </div>
 
                 {/* Üniversite */}
-                <div className={`field-group${errors.universite && touched.universite ? ' field-group--error' : ''}${formData.universite && !errors.universite ? ' field-group--valid' : ''}`}>
+                <div className="field-group">
                   <label className="field-label" htmlFor="universite">
                     <span className="field-icon">🏛</span>
                     Üniversite
-                    <span className="required-mark">*</span>
+                    <span className="optional-mark">(opsiyonel)</span>
                   </label>
                   <div className="input-wrapper">
                     <input
@@ -296,17 +300,14 @@ export default function App() {
                     />
                     <div className="input-highlight" />
                   </div>
-                  {errors.universite && touched.universite && (
-                    <span className="error-msg" role="alert">⚠ {errors.universite}</span>
-                  )}
                 </div>
 
                 {/* Bölüm */}
-                <div className={`field-group${errors.bolum && touched.bolum ? ' field-group--error' : ''}${formData.bolum && !errors.bolum ? ' field-group--valid' : ''}`}>
+                <div className="field-group">
                   <label className="field-label" htmlFor="bolum">
                     <span className="field-icon">📚</span>
                     Bölüm
-                    <span className="required-mark">*</span>
+                    <span className="optional-mark">(opsiyonel)</span>
                   </label>
                   <div className="input-wrapper">
                     <input
@@ -321,17 +322,14 @@ export default function App() {
                     />
                     <div className="input-highlight" />
                   </div>
-                  {errors.bolum && touched.bolum && (
-                    <span className="error-msg" role="alert">⚠ {errors.bolum}</span>
-                  )}
                 </div>
 
                 {/* Sınıf */}
-                <div className={`field-group${errors.sinif && touched.sinif ? ' field-group--error' : ''}${formData.sinif && !errors.sinif ? ' field-group--valid' : ''}`}>
+                <div className="field-group">
                   <label className="field-label" htmlFor="sinif">
                     <span className="field-icon">🎓</span>
                     Sınıf
-                    <span className="required-mark">*</span>
+                    <span className="optional-mark">(opsiyonel)</span>
                   </label>
                   <div className="input-wrapper select-wrapper">
                     <select
@@ -353,9 +351,6 @@ export default function App() {
                     <span className="select-arrow">▾</span>
                     <div className="input-highlight" />
                   </div>
-                  {errors.sinif && touched.sinif && (
-                    <span className="error-msg" role="alert">⚠ {errors.sinif}</span>
-                  )}
                 </div>
 
                 {/* AWS Deneyim Seviyesi */}
@@ -367,10 +362,10 @@ export default function App() {
                   </label>
                   <div className="radio-group">
                     {[
-                      { value: 'hic_yok', label: 'Hiç Yok', icon: '○' },
-                      { value: 'baslangic', label: 'Başlangıç', icon: '◔' },
-                      { value: 'orta', label: 'Orta', icon: '◑' },
-                      { value: 'ileri', label: 'İleri', icon: '●' },
+                      { value: 'hic_yok', label: 'Hiç Yok', icon: '⭐' },
+                      { value: 'baslangic', label: 'Başlangıç', icon: '⭐⭐' },
+                      { value: 'orta', label: 'Orta', icon: '⭐⭐⭐' },
+                      { value: 'ileri', label: 'İleri', icon: '⭐⭐⭐⭐' },
                     ].map(opt => (
                       <label
                         key={opt.value}
@@ -488,7 +483,7 @@ export default function App() {
 
               <h2 className="success-title">Kaydınız Alındı!</h2>
               <p className="success-message">
-                AWS Cloud Clubs — Istanbul Okan University Summit'e başarıyla kayıt oldunuz.
+                Cloud & Okan Dev Event etkinliğine başarıyla kayıt oldunuz.
                 Etkinlik detayları e-posta adresinize gönderilecektir.
               </p>
 
