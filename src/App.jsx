@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const SPARKLE_COUNT = 28
+const SPARKLE_COUNT = 5
 
 function generateSparkles() {
   return Array.from({ length: SPARKLE_COUNT }, (_, i) => ({
@@ -95,7 +95,7 @@ export default function App() {
     setErrors(prev => ({ ...prev, [name]: newErrors[name] }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     const allTouched = Object.keys(initialErrors).reduce(
@@ -111,12 +111,20 @@ export default function App() {
 
     setIsLoading(true)
 
-    setTimeout(() => {
-      console.log('=== AWS Summit Kayıt Formu Verisi ===')
-      console.log(JSON.stringify(formData, null, 2))
-      setIsLoading(false)
+    try {
+      const res = await fetch('https://d5ohy9vobg.execute-api.eu-north-1.amazonaws.com/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Bir hata oluştu')
       setIsSuccess(true)
-    }, 1800)
+    } catch (err) {
+      alert('Kayıt sırasında hata: ' + err.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   function handleReset() {
@@ -155,9 +163,6 @@ export default function App() {
       {/* Vertical ZİRVE 2026 text */}
       <div className="side-text side-text--left">
         <span className="side-text-content">ZİRVE 2026</span>
-      </div>
-      <div className="side-text side-text--right">
-        <span className="side-text-content">CLOUD & OKAN</span>
       </div>
 
       {/* Grid pattern overlay */}
