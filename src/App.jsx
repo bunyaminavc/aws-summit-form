@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const SPARKLE_COUNT = 5
+const SPARKLE_COUNT = 0
 
 function generateSparkles() {
   return Array.from({ length: SPARKLE_COUNT }, (_, i) => ({
